@@ -6,6 +6,7 @@ export default {
     namespaced: true,
     state(){
         return {
+            userIsTutor: false,
             tutors: [
                 {
                     id: 'c1',

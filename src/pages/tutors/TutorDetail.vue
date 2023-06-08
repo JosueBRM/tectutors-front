@@ -2,7 +2,8 @@
     <section>
         <base-card>
             <h2>{{ fullName }}</h2>
-            <h3>${{ rate }}/hour</h3>
+            <h3>Tarifa/hr: ${{ rate }}/hour</h3>
+            <star-rating class="star"/>
         </base-card>
     </section>
     <section>
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+
 export default {
     props: ['id'],
     data() {
