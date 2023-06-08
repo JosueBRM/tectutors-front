@@ -13,6 +13,12 @@
             <p v-if="!lastName.isValid">Last name must not be empty.</p>
         </div>
 
+        <div class="form-control" :class="{invalid: !email.isValid}">
+            <label for="email">E-mail</label>
+            <input type="text" id="email" v-model.trim="email.val"/>
+            <p v-if="!email.isValid">Email must not be empty.</p>
+        </div>
+
         <div class="form-control" :class="{invalid: !description.isValid}">
             <label for="description">Descripcion</label>
             <textarea id="description" rows="5" v-model.trim="description.val"></textarea>
@@ -60,6 +66,10 @@
                   isValid: true
                 },
                 lastName: {
+                  val: '',
+                  isValid: true
+                },
+                email: {
                   val: '',
                   isValid: true
                 },
