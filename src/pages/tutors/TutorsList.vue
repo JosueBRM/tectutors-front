@@ -4,7 +4,7 @@
         <base-card>
             <div class="controls">
                 <base-button mode="outline">Refresh</base-button>
-                <base-button link to="/register">Register as Tutor</base-button>
+                <base-button v-if="!isTutor" link to="/register">Register as Tutor</base-button>
             </div>
             <ul v-if="hasTutors">
                 <TutorItem 

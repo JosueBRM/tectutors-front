@@ -26,6 +26,7 @@ const router = createRouter({
         },
         { path:'/register', component: TutorRegistration },
         { path:'/requests', component: RequestsRecieved },
+        { path:'/login', component: null },
         { path:'/:notFound(.*)', component: NotFound }
     ]
 });

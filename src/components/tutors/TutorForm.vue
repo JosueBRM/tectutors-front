@@ -1,46 +1,58 @@
 <template>
     <form @submit.prevent="submitForm">
 
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !firstName.isValid}">
             <label for="firstname">Nombre</label>
-            <input type="text" id="fistname" v-model.trim="firstName"/>
+            <input type="text" id="fistname" v-model.trim="firstName.val"/>
+            <p v-if="!firstName.isValid">First name must not be empty.</p>
         </div>
 
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !lastName.isValid}">
             <label for="lastname">Apellido</label>
-            <input type="text" id="lastname" v-model.trim="lastName"/>
+            <input type="text" id="lastname" v-model.trim="lastName.val"/>
+            <p v-if="!lastName.isValid">Last name must not be empty.</p>
         </div>
 
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !email.isValid}">
+            <label for="email">E-mail</label>
+            <input type="text" id="email" v-model.trim="email.val"/>
+            <p v-if="!email.isValid">Email must not be empty.</p>
+        </div>
+
+        <div class="form-control" :class="{invalid: !description.isValid}">
             <label for="description">Descripcion</label>
-            <textarea id="description" rows="5" v-model.trim="description"></textarea>
+            <textarea id="description" rows="5" v-model.trim="description.val"></textarea>
+            <p v-if="!description.isValid">Description must not be empty.</p>
         </div>
 
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !rate.isValid}">
             <label for="rate">Tarifa por Hora</label>
-            <input type="text" id="rate" v-model.number="rate"/>
+            <input type="number" id="rate" v-model.number="rate.val"/>
+            <p v-if="!rate.isValid">Rate must be greater than 0.</p>
         </div> 
 
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !areas.isValid}">
             <h3>Areas de experiencia</h3>
 
             <div>
-                <input type="checkbox" id="frontend" value="frontend" v-model="areas">
+                <input type="checkbox" id="frontend" value="frontend" v-model="areas.val">
                 <label for="frontend">Frontend Development</label>
             </div>
 
             <div>
-                <input type="checkbox" id="backend" value="backend" v-model="areas">
+                <input type="checkbox" id="backend" value="backend" v-model="areas.val">
                 <label for="backend">Backend Development</label>
             </div>
 
             <div>
-                <input type="checkbox" id="career" value="career" v-model="areas">
+                <input type="checkbox" id="career" value="career" v-model="areas.val">
                 <label for="career">Career Advisory</label>
             </div>
+            <p v-if="!areas.isValid">At least one expertise must be selected.</p>
         </div>
 
-        <base-button>Register</base-button>
+        <p v-if="!formIsValid">Plese fix the above errors and submit again.</p>
+        <base-button @click="showAlert">Register</base-button>
     </form>
 </template>
 
@@ -49,15 +61,67 @@
         emits:['save-data'],
         data() {
             return {
-                firstName: '',
-                lastName: '', 
-                description: '',
-                rate: null,
-                areas: []
+                firstName: {
+                  val: '',
+                  isValid: true
+                },
+                lastName: {
+                  val: '',
+                  isValid: true
+                },
+                email: {
+                  val: '',
+                  isValid: true
+                },
+                description: {
+                  val: '',
+                  isValid: true
+                },
+                rate: {
+                  val: null,
+                  isValid: true
+                },
+                areas: {
+                  val: [],
+                  isValid: true
+                },
+                formIsValid: true
             };
         },
         methods: {
+            validateForm() {
+              this.formIsValid = true;
+              if ( this.firstName.val === '' ){
+                this.firstName.isValid = false;
+                this.formIsValid = false;
+              }
+              if ( this.lastName.val === '' ){
+                this.lastName.isValid = false;
+                this.formIsValid = false;
+              }
+              if ( this.lastName.val === '' ){
+                this.lastName.isValid = false;
+                this.formIsValid = false;
+              }
+              if ( this.description.val === '' ){
+                this.description.isValid = false;
+                this.formIsValid = false;
+              }
+              if ( !this.rate.val || this.rate.val < 0 ){
+                this.rate.isValid = false;
+                this.formIsValid = false;
+              }
+              if ( this.areas.val.length === 0 ){
+                this.areas.isValid = false;
+              }
+            }, 
             submitForm() {
+              this.validateForm();
+
+              if ( !this.formIsValid) {
+                return;
+              }
+
                 const formData = {
                     first: this.firstName,
                     last: this.lastName,
@@ -66,7 +130,27 @@
                     areas: this.areas
                 };
                 this.$emit('save-data', formData);
-            }
+            },
+            showAlert() {
+              if (this.formIsValid) {
+                this.$swal('Registrado Exitosamente!');
+                this.$swal.fire(
+                'Registrado!',
+                'Te registraste exitosamente!',
+                'success'
+                )
+              }else{
+                this.$swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                  footer: '<a href="">Why do I have this issue?</a>'
+                })
+              }
+
+              
+            },
+            
         }
     };
 </script>
