@@ -1,18 +1,40 @@
-<template>
+<template @submit.prevent="submitForm">
     <form>
         <div class="from-control">
             <label for="email">Your E-mail</label>
-            <input type="email" id="email"/>
+            <input type="email" id="email" v-model,trim="email"/>
         </div>
         <div class="from-control">
             <label for="message">Message</label>
-            <textarea rows="5" id="message"></textarea>
+            <textarea rows="5" id="message" v-model,trim="message"></textarea>
         </div>
+        <p class="errors" v-if="!formIsValid">Please enter a valid E-mail and non-empty Message.</p>
         <div class="actions">
             <base-button>Send Message</base-button>
         </div>
     </form>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            email: '',
+            message: '',
+            formIsValid: true
+        }
+    },
+    methods: {
+        submitForm(){
+            this.formIsValid = true;
+            if(this.email === '' || !this.email.includes('@') || this.message === '') {
+                this.formIsValid = false;
+                return;
+            }
+        }
+    }
+}
+</script>
 
 <style scoped>
 form {
