@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav>
-            <h1><router-link to="/">Find a Tutor</router-link></h1>
+            <h1><router-link to="/">Tecnologico de la Laguna</router-link></h1>
             <ul>
                 <li><router-link to="/tutors">All Tutors</router-link></li>
                 <li><router-link to="/requests">Requests</router-link></li>
