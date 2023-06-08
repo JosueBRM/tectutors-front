@@ -9,13 +9,15 @@
 
 <script>
 import TutorForm from '@/components/tutors/TutorForm.vue';
+
 export default {
     components: {
         TutorForm
-    } ,
+    },
     methods: {
         saveData(data) {
-            this.$store.dispatch('tutors/registerTutors', data);
+            this.$store.dispatch('tutors/registerTutor', data);
+            this.$router.replace('/tutors'); //back to home 
         }
     },
     

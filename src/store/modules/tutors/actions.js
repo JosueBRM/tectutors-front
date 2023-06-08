@@ -1,7 +1,7 @@
 export default {
     registerTutor(context, data) {
         const tutorData = {
-            id: 'j4',
+            id: context.rootGetters.userId,
             firstName: data.first,
             lastName: data.last,
             description: data.desc,

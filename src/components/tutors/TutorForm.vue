@@ -68,7 +68,7 @@
                 this.$emit('save-data', formData);
             }
         }
-    }
+    };
 </script>
 
 <style scoped>

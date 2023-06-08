@@ -61,6 +61,10 @@ export default {
         },
         hasTutors() {
             return this.$store.getters["tutors/hasTutors"];
+        }, 
+
+        isTutor() {
+        return this.$store.getters['tutors/isTutor']
         }
     },
     methods: {
